@@ -1,12 +1,26 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace AccountOwnerServer.Extensions
 {
-    public class ServiceExtensions
+    public static class ServiceExtensions
     {
-        
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .AllowAnyOrigin() // WithOrigins("dominio")
+                    .AllowAnyMethod() // WithMethods("GET", "POST")
+                    .AllowAnyHeader() // WithHeaders("accept", "content-header")
+                );
+            });
+        }
+
+        public static void configureIISIntegration(this IServiceCollection services)
+        {
+            services.Configure<IISOptions>(options => {
+                
+            });
+
+        }
     }
 }
